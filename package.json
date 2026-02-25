@@ -1,0 +1,17 @@
+{
+  "name": "discord-status-monitor",
+  "version": "1.0.0",
+  "description": "Ein Discord Bot, der den Online-Status von Bots überwacht",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "nodemon bot.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.14.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
