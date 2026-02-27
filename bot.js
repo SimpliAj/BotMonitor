@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, ChannelType, EmbedBuilder } = require('discord.js');
+const { Client, GatewayIntentBits, ChannelType, EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
@@ -94,8 +94,54 @@ function deleteConfig() {
   }
 }
 
-client.once('ready', () => {
+client.once('ready', async () => {
   console.log(`✅ Bot ist online als ${client.user.tag}`);
+
+  // Sync Commands
+  try {
+    const commands = [
+      new SlashCommandBuilder()
+        .setName('status')
+        .setDescription('Starts the Status Monitor'),
+
+      new SlashCommandBuilder()
+        .setName('stop_status')
+        .setDescription('Stops the Status Monitor'),
+
+      new SlashCommandBuilder()
+        .setName('help_status')
+        .setDescription('Shows help for the Status Monitor'),
+
+      new SlashCommandBuilder()
+        .setName('add_bot')
+        .setDescription('Adds a bot to the monitoring list')
+        .addStringOption(option =>
+          option
+            .setName('bot_id')
+            .setDescription('The ID of the bot to add')
+            .setRequired(true)
+        ),
+
+      new SlashCommandBuilder()
+        .setName('remove_bot')
+        .setDescription('Removes a bot from the monitoring list')
+        .addStringOption(option =>
+          option
+            .setName('bot_id')
+            .setDescription('The ID of the bot to remove')
+            .setRequired(true)
+        ),
+
+      new SlashCommandBuilder()
+        .setName('list_bots')
+        .setDescription('Shows all monitored bots'),
+    ].map((command) => command.toJSON());
+
+    await client.application.commands.set(commands);
+    console.log('🔄 Slash-Commands synchronisiert!');
+  } catch (error) {
+    console.error('❌ Fehler beim Synchronisieren der Commands:', error);
+  }
 
   // Lade überwachte Bots
   loadMonitoredBots();
