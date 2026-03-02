@@ -16,7 +16,7 @@ const commands = [
 
   new SlashCommandBuilder()
     .setName('add_bot')
-    .setDescription('Adds a bot to the monitoring list')
+    .setDescription('Adds a bot to this server\'s monitoring list')
     .addStringOption(option =>
       option
         .setName('bot_id')
@@ -26,7 +26,7 @@ const commands = [
 
   new SlashCommandBuilder()
     .setName('remove_bot')
-    .setDescription('Removes a bot from the monitoring list')
+    .setDescription('Removes a bot from this server\'s monitoring list')
     .addStringOption(option =>
       option
         .setName('bot_id')
@@ -36,7 +36,7 @@ const commands = [
 
   new SlashCommandBuilder()
     .setName('list_bots')
-    .setDescription('Shows all monitored bots'),
+    .setDescription('Shows all monitored bots on this server'),
 ].map((command) => command.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
